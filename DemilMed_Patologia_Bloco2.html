@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DemilMed — Patologia Celular · Bloco II</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,600;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0d1117;
+    --surface:   #161b22;
+    --surface2:  #1c2230;
+    --surface3:  #21262f;
+    --border:    #30363d;
+    --border2:   #3d4451;
+    --ink:       #e6edf3;
+    --ink2:      #8b949e;
+    --ink3:      #6e7681;
+    --red:       #f47067;
+    --red-dim:   #3d1f1c;
+    --red-mid:   #7a2e2a;
+    --gold:      #e3b341;
+    --gold-dim:  #2e2400;
+    --gold-mid:  #5c4a00;
+    --blue:      #58a6ff;
+    --blue-dim:  #0d2044;
+    --blue-mid:  #1a3a6e;
+    --green:     #3fb950;
+    --green-dim: #0d2b14;
+    --green-mid: #1a4d25;
+    --purple:    #bc8cff;
+    --purple-dim:#1e0f38;
+    --cyan:      #39d3f7;
+    --cyan-dim:  #042030;
+    --orange:    #ff9f43;
+    --orange-dim:#2e1a00;
+    --shadow:    rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 20px,
+      rgba(255,255,255,0.012) 20px, rgba(255,255,255,0.012) 21px
+    );
+    pointer-events: none;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--gold), var(--blue), var(--green));
+  }
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    position: relative;
+    color: var(--ink);
+  }
+  .site-header h1 span { color: var(--gold); font-style: italic; }
+  .header-sub {
+    font-size: 0.95rem;
+    color: var(--ink2);
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+  .block-badge {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    margin-top: 1rem;
+    letter-spacing: 0.1em;
+  }
+  .prev-badge {
+    display: inline-block;
+    background: transparent;
+    color: var(--ink2);
+    border: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── NAV ─── */
+  .toc-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .toc-nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--blue);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .toc-nav a:hover { border-color: var(--red); color: var(--red); }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* ─── PARTS / SECTION HEADERS ─── */
+  .part-header {
+    border-top: 3px solid var(--border2);
+    padding-top: 1.5rem;
+    margin: 4rem 0 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .part-header:first-child { margin-top: 0; }
+  .part-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .part-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .part-title em { color: var(--red); font-style: italic; }
+
+  .section-h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 3rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--blue);
+  }
+  .section-h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 2rem 0 0.75rem;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-h3::before { content: '▸'; color: var(--red); font-size: 0.8rem; }
+
+  /* ─── PROSE ─── */
+  p { margin-bottom: 1rem; }
+  strong { color: var(--ink); font-weight: 700; }
+  em { font-style: italic; }
+
+  .etymology {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    background: var(--gold-dim);
+    border-left: 3px solid var(--gold);
+    padding: 0.6rem 1rem;
+    margin: 1rem 0 1.5rem;
+    border-radius: 0 4px 4px 0;
+    color: #c9a52e;
+  }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--red), var(--blue));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.9rem;
+    top: 0.45rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--bg);
+  }
+  .tl-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ─── CARDS / CALLOUTS ─── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue-dim); }
+  .card-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+  }
+  .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--ink); }
+  .card p { font-size: 0.88rem; color: var(--ink2); margin: 0; }
+
+  /* tag colors */
+  .tag-red    { background: var(--red-dim);    color: var(--red);    border: 1px solid var(--red-mid); }
+  .tag-gold   { background: var(--gold-dim);   color: var(--gold);   border: 1px solid var(--gold-mid); }
+  .tag-blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid var(--blue-mid); }
+  .tag-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid var(--green-mid); }
+  .tag-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid #4a2a7a; }
+  .tag-cyan   { background: var(--cyan-dim);   color: var(--cyan);   border: 1px solid #0a3a50; }
+  .tag-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid #4a3000; }
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout {
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-left-width: 4px;
+    border-left-style: solid;
+  }
+  .callout-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .callout p { margin-bottom: 0.5rem; font-size: 0.92rem; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout-red    { background: var(--red-dim);    border-color: var(--red);    }
+  .callout-red .callout-title { color: var(--red); }
+  .callout-gold   { background: var(--gold-dim);   border-color: var(--gold);   }
+  .callout-gold .callout-title { color: var(--gold); }
+  .callout-blue   { background: var(--blue-dim);   border-color: var(--blue);   }
+  .callout-blue .callout-title { color: var(--blue); }
+  .callout-green  { background: var(--green-dim);  border-color: var(--green);  }
+  .callout-green .callout-title { color: var(--green); }
+  .callout-purple { background: var(--purple-dim); border-color: var(--purple); }
+  .callout-purple .callout-title { color: var(--purple); }
+  .callout-cyan   { background: var(--cyan-dim);   border-color: var(--cyan);   }
+  .callout-cyan .callout-title { color: var(--cyan); }
+
+  /* ─── TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0 2rem;
+    font-size: 0.875rem;
+    background: var(--surface2);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .data-table thead tr {
+    background: var(--surface3);
+    border-bottom: 1px solid var(--border2);
+  }
+  .data-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    font-weight: 500;
+  }
+  .data-table td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .data-table td strong { color: var(--gold); }
+
+  /* ─── PATHWAY DIAGRAM ─── */
+  .pathway {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+  }
+  .pathway-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+  .pathway-step:last-child { margin-bottom: 0; }
+  .pathway-arrow {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--red);
+    flex-shrink: 0;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .pathway-node {
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 0.3rem 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink);
+    display: inline-block;
+    margin-bottom: 0.35rem;
+  }
+  .pathway-note {
+    font-size: 0.8rem;
+    color: var(--ink2);
+    font-style: italic;
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ─── MONO INLINE ─── */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82em;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    color: var(--green);
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  }
+  .modal-box::-webkit-scrollbar { width: 6px; }
+  .modal-box::-webkit-scrollbar-track { background: var(--surface2); }
+  .modal-box::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  .modal-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .modal-h {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-body p { font-size: 0.92rem; margin-bottom: 0.75rem; color: var(--ink2); line-height: 1.7; }
+  .modal-body strong { color: var(--ink); }
+  .modal-body em { color: var(--gold); font-style: italic; }
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--ink2);
+    cursor: pointer;
+    font-size: 1rem;
+    width: 2rem; height: 2rem;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+  .modal-close:hover { background: var(--red-dim); color: var(--red); }
+
+  /* ─── CLICK CARDS ─── */
+  .clickable {
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .clickable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .card-hint {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink3);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── NECROSE PADRÕES GRID ─── */
+  .necrose-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .necrose-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .necrose-card:hover { transform: translateY(-2px); border-color: var(--red); }
+  .necrose-header {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .necrose-icon { font-size: 1.4rem; }
+  .necrose-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .necrose-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--ink3);
+    letter-spacing: 0.06em;
+  }
+  .necrose-body {
+    padding: 0 1rem 1rem;
+    font-size: 0.82rem;
+    color: var(--ink2);
+  }
+
+  /* ─── APOPTOSE VS NECROSE ─── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+  .compare-col { padding: 1.25rem; }
+  .compare-col:first-child {
+    background: var(--green-dim);
+    border-right: 1px solid var(--border);
+  }
+  .compare-col:last-child { background: var(--red-dim); }
+  .compare-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-col:first-child .compare-title { color: var(--green); }
+  .compare-col:last-child .compare-title  { color: var(--red);   }
+  .compare-item {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .compare-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink3);
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+    min-width: 90px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── DEATH FORMS ROW ─── */
+  .death-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .death-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .death-card:hover { transform: translateY(-2px); }
+  .death-card.dc-red    { border-top: 3px solid var(--red); }
+  .death-card.dc-blue   { border-top: 3px solid var(--blue); }
+  .death-card.dc-purple { border-top: 3px solid var(--purple); }
+  .death-card.dc-orange { border-top: 3px solid var(--orange); }
+  .death-card.dc-cyan   { border-top: 3px solid var(--cyan); }
+  .death-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+  .death-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--ink3); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+  .death-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 2px; margin-bottom: 0.6rem; display: inline-block; }
+  .death-body { font-size: 0.82rem; color: var(--ink2); line-height: 1.5; }
+
+  /* ─── STAIN PANEL ─── */
+  .stain-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  .stain-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .stain-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .stain-name { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--ink2); }
+  .stain-result { font-size: 0.8rem; color: var(--ink); font-weight: 600; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  @media (max-width: 700px) {
+    .site-header { padding: 1.5rem 1.25rem 1.25rem; }
+    .toc-nav { padding: 0.75rem 1.25rem; }
+    .main-wrap { padding: 2rem 1.25rem 4rem; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="site-header">
+  <div class="header-eyebrow">DemilMed-UL · Patologia Integrada</div>
+  <h1>Patologia <span>Celular</span></h1>
+  <div class="header-sub">Lesão Celular · Morte · Degenerações · Calcificações</div>
+  <div>
+    <span class="block-badge">BLOCO II</span>
+    <span class="prev-badge">← Bloco I: Adaptações &amp; Acúmulos</span>
+  </div>
+</header>
+
+<!-- ─── NAV ─── -->
+<nav class="toc-nav">
+  <a href="#lesao">Lesão Celular</a>
+  <a href="#isquemia">Isquemia</a>
+  <a href="#necrose">Necrose</a>
+  <a href="#apoptose">Apoptose</a>
+  <a href="#morte-especializada">Piroptose/Necroptose/Ferroptose</a>
+  <a href="#degenera">Degenerações</a>
+  <a href="#calcificacoes">Calcificações</a>
+  <a href="#coloracoes">Colorações</a>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main class="main-wrap">
+
+  <!-- ═══════════════════════════════════════════════════════
+       PARTE III — DA ADAPTAÇÃO À LESÃO
+       ═══════════════════════════════════════════════════════ -->
+  <section id="lesao">
+    <div class="part-header">
+      <span class="part-label">Parte III</span>
+      <h2 class="part-title">Da Adaptação à <em>Lesão</em> — A Travessia do Limiar</h2>
+    </div>
+
+    <p>Quando o estresse supera a capacidade das chaperonas (HSPs), da resposta à proteína não dobrada (UPR) e dos sistemas de reparo de DNA, a célula cruza um limiar — da adaptação para a lesão. Esta travessia tem marcadores morfológicos precisos que o patologista identifica na lâmina.</p>
+
+    <div class="callout callout-gold">
+      <div class="callout-title">🔬 Respostas de Reparo Imediato — Antes de Adaptar ou Morrer</div>
+      <p><strong>HSPs (Heat Shock Proteins):</strong> Chaperonas moleculares que previnem agregação e facilitam redobramento de proteínas estressadas. HSP70 é a mais induzível; HSP90 protege quinases (HER2, Raf, Akt) e receptores nucleares — alvo do ganetespibe. HSF1 controla transcrição: em repouso, sequestrado pela HSP90; sob estresse, trimeriza e ativa os genes HSP.</p>
+      <p><strong>UPR (Unfolded Protein Response):</strong> Três sensores no RE — IRE1α (ativa XBP1 → ↑ chaperonas), PERK (fosforila eIF2α → ↓ síntese global), ATF6 (clivado no Golgi → ↑ chaperonas). Se prolongada → CHOP → apoptose por estresse de RE. Clinicamente importante no mieloma múltiplo e na deficiência de alfa-1-antitripsina.</p>
+    </div>
+
+    <div class="section-h2">7. Lesão Reversível — A Zona Cinzenta</div>
+
+    <p>Marcadores morfológicos da <strong>lesão reversível</strong> — presentes antes do ponto de não-retorno:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag tag-blue">PRECOCE</span>
+        <div class="card-title">Inchaço Celular (Hidrópico)</div>
+        <p>↓ATP → ↓Na⁺/K⁺-ATPase → Na⁺ acumula → ↑osmolaridade → água entra. Citoplasma pálido e aguado, H&E. Primeiro e mais precoce sinal de lesão reversível.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-gold">MODERADO</span>
+        <div class="card-title">Vacuolização Citoplasmática</div>
+        <p>Dilatação do RE e aparelho de Golgi, mitocôndrias inchadas. Vacúolos maiores e mais discretos que no inchaço simples. Ainda reversível.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-red">LIMIAR</span>
+        <div class="card-title">Blebs de Membrana</div>
+        <p>Calpaínas ativadas pelo Ca²⁺ despolarizam o citoesqueleto cortical → protuberâncias sem suporte. Na lesão reversível, retraem quando o agressor é removido. Na irreversível, <strong>rompem</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-purple">NUCLEAR</span>
+        <div class="card-title">Marginalização Leve da Cromatina</div>
+        <p>Cromatina começa a marginalizar na periferia nuclear — sinal de interrupção da transcrição, não ainda de morte nuclear. Transcrição para; maquinaria de reparo ainda funcional.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-red">
+      <div class="callout-title">⚠️ Marcadores do Ponto de Irreversibilidade</div>
+      <p><strong>Densidades amorfas nas mitocôndrias (MET):</strong> Precipitados de fosfato de cálcio e proteínas desnaturadas na matriz mitocondrial — marcador ultraestrutural mais precoce e confiável do ponto de não-retorno.</p>
+      <p><strong>Abertura do mPTP (Mitochondrial Permeability Transition Pore):</strong> ↑Ca²⁺ mitocondrial + ↓pH revertendo + ROS → CypD → mPTP abre → gradiente mitocondrial colapsa → membrana externa rompe → citocromo c no citoplasma.</p>
+      <p><strong>Ruptura da membrana plasmática:</strong> Blebs rompem → LDH, CK, AST, troponinas vazam para interstício → entram na circulação → marcadores bioquímicos de necrose.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ISQUEMIA
+       ═══════════════════════════════════════════════════════ -->
+  <section id="isquemia">
+    <div class="part-header">
+      <span class="part-label">Parte IV</span>
+      <h2 class="part-title">Lesão <em>Isquêmica</em> — A Narrativa Molecular</h2>
+    </div>
+
+    <div class="etymology">
+      <strong>Isquemia</strong> — Do grego <em>iskhein</em> (reter) + <em>haima</em> (sangue). Retenção de sangue — privação simultânea de O₂, glicose, e acúmulo de metabólitos tóxicos.
+    </div>
+
+    <p>A lesão isquêmica é o <strong>modelo didático central</strong> da patologia celular — demonstra sequencialmente como todos os sistemas homeostáticos falham em cascata. O modelo do infarto do miocárdio é paradigmático.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">Segundos 0–10</div>
+        <p>Oclusão coronariana → O₂ esgota-se em 10–30 s. CTE para. ATP sintase para. O cardiomiócito entra em colapso energético imediato.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">Segundos 10–60</div>
+        <p>↓ATP → ↑AMP → <strong>AMPK</strong> ativada → inibe mTORC1, ativa glicólise. LDH: piruvato → lactato + NAD⁺. Produção de ATP ~5% do normal. Acidose intracelular começa.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">Minutos 1–5</div>
+        <p>pH cai (7,2 → 6,8 → 6,5). ↓pH inibe PFK-1 (enzima glicolítica, pH ótimo 7,4). <strong>↓ATP → Na⁺/K⁺-ATPase falha → Na⁺ intracelular ↑ → água entra → inchaço celular</strong> (degeneração hidrópica — 1º sinal morfológico). SERCA falha → Ca²⁺ começa a subir.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">Minutos 5–20</div>
+        <p>[Ca²⁺]i sobe de 0,1 µM → 1–10 µM (10–100×). Calpaínas → citoesqueleto degradado → <strong>blebs de membrana</strong>. Fosfolipases A₂/C → membranas degradadas. nNOS → NO• → ONOO⁻ → ataca proteínas e DNA.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">Minutos 20–40</div>
+        <p><strong>Ponto de irreversibilidade se aproxima.</strong> Densidades amorfas mitocondriais (MET). mPTP abre → membrana externa rompe → citocromo c liberado. Blebs rompem. Troponinas e CK-MB detectáveis no soro a partir de ~3–6h.</p>
+      </div>
+    </div>
+
+    <div class="section-h3">8.1 O Paradoxo da Reperfusão — Lesão I/R</div>
+
+    <p>Restaurar o fluxo (angioplastia, trombólise) é absolutamente necessário — mas causa uma <strong>segunda onda de morte</strong> celular na zona periinfarto.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag tag-red">BURST ROS</span>
+        <div class="card-title">Segundos–Minutos após Reperfusão</div>
+        <p>O₂ chega à CTE "travada" → ubisemiquinona acumulada → O₂•⁻ em massa → H₂O₂ → •OH (Fenton) → dano oxidativo maciço às membranas e DNA.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-gold">pH PARADOX</span>
+        <div class="card-title">Minutos–Horas</div>
+        <p>NHE1 reativa com sangue tamponado → pH normaliza → remove inibição ácida do mPTP → mPTP abre amplamente. Esta é a base da lesão de reperfusão.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-blue">NEUTRÓFILOS</span>
+        <div class="card-title">Horas após Reperfusão</div>
+        <p>P-selectina (Weibel-Palade) e E-selectina → neutrófilos rolam → ICAM-1/VCAM-1 → diapedese → MPO libera HOCl ("bleach biológico") → dano ao parênquima periinfarto.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-cyan">CARDIOPROTEÇÃO</span>
+        <div class="card-title">Estratégias Clínicas</div>
+        <p>Pós-condicionamento isquêmico (balão inflado/desinflado repetidamente) → ativa PI3K/Akt + ERK1/2 → fecha mPTP. RIPC: breve isquemia de braço antes de cirurgia. Ciclosporina A: inibe CypD.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">⏱️ Door-to-Balloon Time</div>
+      <p>O ponto de não-retorno no cardiomiócito ocorre entre <strong>20–40 minutos</strong> de isquemia completa. Na prática: restaurar fluxo em <strong>&lt; 90 minutos</strong> (meta do protocolo IAM com supradesnivelamento de ST) salva o máximo de miocárdio.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NECROSE
+       ═══════════════════════════════════════════════════════ -->
+  <section id="necrose">
+    <div class="part-header">
+      <span class="part-label">Parte V · §9</span>
+      <h2 class="part-title">Necrose — <em>A Morte Barulhenta</em></h2>
+    </div>
+
+    <div class="etymology">
+      <strong>Necrose</strong> — Do grego <em>nékrōsis</em> (nekrós = morto + -ōsis = processo patológico). Raiz de: necropsia, necrobiose, necroptose.
+    </div>
+
+    <p>A necrose é a morte celular <strong>patológica</strong> caracterizada por ruptura das membranas, vazamento do conteúdo citoplasmático e ativação da resposta inflamatória. Sempre patológica — ao contrário da apoptose.</p>
+
+    <div class="section-h2">9.1 A Tríade Histológica Nuclear da Necrose</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag tag-red">1º ESTÁGIO</span>
+        <div class="card-title">Picnose (Pyknosis)</div>
+        <p>Do grego <em>pyknós</em> = denso. Núcleo encolhe e fica densamente basofílico (azul-escuro). Cromatina condensa e marginaliza — amorfa, sem organização de cromossomos. Distinguir da mitose: na mitose há fuso e cromossomos definidos.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-red">2º ESTÁGIO</span>
+        <div class="card-title">Cariorrexe (Karyorrhexis)</div>
+        <p>Do grego <em>rhéxis</em> = ruptura. Núcleo picnótico fragmenta-se em múltiplos fragmentos escuros distribuídos pelo citoplasma. Endonucleases + clivagem da lamina nuclear por calpaínas. Na necrose: fragmentos <em>livres</em> (vs. apoptose: envolvidos por membrana).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-red">3º ESTÁGIO</span>
+        <div class="card-title">Cariólise (Karyolysis)</div>
+        <p>Do grego <em>lýsis</em> = dissolução. Núcleo perde basofilia e "desaparece" — DNAses e RNAses. A célula fica como "fantasma" (ghost cell) — citoplasma eosinofílico sem núcleo visível. Sequência típica: picnose → cariorrexe → cariólise.</p>
+      </div>
+    </div>
+
+    <div class="section-h2">9.2 Padrões de Necrose — Taxonomia Completa</div>
+    <p>Clique em cada padrão para detalhes histológicos, mecanismo e laudo modelo:</p>
+
+    <div class="necrose-grid">
+      <div class="necrose-card clickable" onclick="openModal('ncoa')">
+        <div class="necrose-header" style="background:linear-gradient(135deg,var(--red-dim),transparent)">
+          <span class="necrose-icon">🏛️</span>
+          <div>
+            <div class="necrose-name">Coagulação</div>
+            <div class="necrose-sub">ISQUEMIA · PARÊNQUIMA SÓLIDO</div>
+          </div>
+        </div>
+        <div class="necrose-body">Proteínas coaguladas mantêm o "esqueleto" celular. Ghost cells. Acidose inativa as proteases — paradoxo protetor. Mais comum.</div>
+      </div>
+      <div class="necrose-card clickable" onclick="openModal('nliq')">
+        <div class="necrose-header" style="background:linear-gradient(135deg,var(--blue-dim),transparent)">
+          <span class="necrose-icon">💧</span>
+          <div>
+            <div class="necrose-name">Liquefativa</div>
+            <div class="necrose-sub">INFECÇÃO · SNC</div>
+          </div>
+        </div>
+        <div class="necrose-body">Enzimas proteolíticas predominam — digestão total. Pus (bacteriana) ou cavidade cística (infarto cerebral). Macrófagos espumosos (células de Gitter).</div>
+      </div>
+      <div class="necrose-card clickable" onclick="openModal('ncas')">
+        <div class="necrose-header" style="background:linear-gradient(135deg,var(--gold-dim),transparent)">
+          <span class="necrose-icon">🧀</span>
+          <div>
+            <div class="necrose-name">Caseosa</div>
+            <div class="necrose-sub">TUBERCULOSE · FUNGOS</div>
+          </div>
+        </div>
+        <div class="necrose-body">Material branco-amarelado, friável, textura de "queijo fresco". Centro amorfo eosinofílico + granuloma com células de Langhans.</div>
+      </div>
+      <div class="necrose-card clickable" onclick="openModal('ngor')">
+        <div class="necrose-header" style="background:linear-gradient(135deg,var(--orange-dim),transparent)">
+          <span class="necrose-icon">🥞</span>
+          <div>
+            <div class="necrose-name">Gordurosa</div>
+            <div class="necrose-sub">PANCREATITE · MAMA</div>
+          </div>
+        </div>
+        <div class="necrose-body">Enzimática: saponificação por lipase → áreas "em giz". Traumática: macrófagos espumosos + células gigantes de corpo estranho.</div>
+      </div>
+      <div class="necrose-card clickable" onclick="openModal('nfib')">
+        <div class="necrose-header" style="background:linear-gradient(135deg,var(--purple-dim),transparent)">
+          <span class="necrose-icon">🔴</span>
+          <div>
+            <div class="necrose-name">Fibrinoide</div>
+            <div class="necrose-sub">VASCULITE · HIPERTENSÃO MALIGNA</div>
+          </div>
+        </div>
+        <div class="necrose-body">Parede vascular necrótica com aspecto homogêneo eosinofílico semelhante à fibrina. Imunocomplexos. Leucocitoclase.</div>
+      </div>
+      <div class="necrose-card clickable" onclick="openModal('ngan')">
+        <div class="necrose-header" style="background:linear-gradient(135deg,#1a0d00,transparent)">
+          <span class="necrose-icon">🦶</span>
+          <div>
+            <div class="necrose-name">Gangrenosa</div>
+            <div class="necrose-sub">MEMBRO · DM · ANAERÓBIOS</div>
+          </div>
+        </div>
+        <div class="necrose-body">Descrição clínica (não histológica). Seca: coagulação + mumificação. Úmida: coagulação + anaeróbios + gás. Gasosa: Clostridium → emergência.</div>
+      </div>
+    </div>
+
+    <!-- Cronologia IAM em tabela -->
+    <div class="section-h3">Cronologia Histológica do IAM — Necrose de Coagulação</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tempo</th>
+          <th>Macroscopia</th>
+          <th>Microscopia H&E</th>
+          <th>Infiltrado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>0–4h</strong></td>
+          <td>Normal (armadilha!)</td>
+          <td>Normal ou leve eosinofilia; TTC: área branca</td>
+          <td>Nenhum</td>
+        </tr>
+        <tr>
+          <td><strong>4–12h</strong></td>
+          <td>Área pálida emergindo</td>
+          <td>Hipereosinofilia, picnose inicial, <em>bandas de contração</em> (reperfusão/morte súbita)</td>
+          <td>Nenhum</td>
+        </tr>
+        <tr>
+          <td><strong>12–24h</strong></td>
+          <td>Área amarelo-pálida</td>
+          <td>Picnose evidente, hipereosinofilia estabelecida, fibras homogêneas</td>
+          <td>Neutrófilos na periferia (IL-8, C5a)</td>
+        </tr>
+        <tr>
+          <td><strong>24–72h</strong></td>
+          <td>Amarelo-acastanhado</td>
+          <td><strong>Ghost cells</strong> (cariólise), contornos preservados sem núcleo</td>
+          <td>Neutrófilos densos "em tapete"</td>
+        </tr>
+        <tr>
+          <td><strong>3–5 dias</strong></td>
+          <td>Tecido friável</td>
+          <td>Detritos neutrofílicos, macrófagos M1→M2 (efferocitose)</td>
+          <td>Transição neutrófilos → macrófagos</td>
+        </tr>
+        <tr>
+          <td><strong>1–2 sem.</strong></td>
+          <td>Tecido de granulação</td>
+          <td>Capilares neoformados (VEGF), fibroblastos, colágeno tipo III</td>
+          <td>Macrófagos + linfócitos</td>
+        </tr>
+        <tr>
+          <td><strong>3–8 sem.</strong></td>
+          <td>Cicatriz esbranquiçada</td>
+          <td>Colágeno tipo I denso, área acelular. Masson: azul/verde</td>
+          <td>Escasso / ausente</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       APOPTOSE
+       ═══════════════════════════════════════════════════════ -->
+  <section id="apoptose">
+    <div class="part-header">
+      <span class="part-label">Parte V · §10</span>
+      <h2 class="part-title">Apoptose — <em>A Morte Silenciosa</em></h2>
+    </div>
+
+    <div class="etymology">
+      <strong>Apoptose</strong> — Do grego <em>apó</em> (longe de) + <em>ptōsis</em> (queda). "Queda de folhas" — metáfora das folhas que caem no outono, ordenadamente, sem destruir a árvore. Cunhada por Kerr, Wyllie e Currie em 1972.
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="compare-title">APOPTOSE</div>
+        <div class="compare-item"><span class="compare-label">Estímulo</span><span>Fisiológico ou patológico</span></div>
+        <div class="compare-item"><span class="compare-label">Energia</span><span>Requer ATP (processo ativo)</span></div>
+        <div class="compare-item"><span class="compare-label">Membrana</span><span>Intacta até o final</span></div>
+        <div class="compare-item"><span class="compare-label">Inflamação</span><span>Nenhuma — fagocitose silenciosa</span></div>
+        <div class="compare-item"><span class="compare-label">DNA</span><span>Fragmentação internucleosomal (200 bp) — "ladder" em eletroforese</span></div>
+        <div class="compare-item"><span class="compare-label">Morfologia</span><span>Retração, condensação, corpos apoptóticos</span></div>
+        <div class="compare-item"><span class="compare-label">Reversível?</span><span>Sim (em fases precoces)</span></div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-title">NECROSE</div>
+        <div class="compare-item"><span class="compare-label">Estímulo</span><span>Sempre patológico</span></div>
+        <div class="compare-item"><span class="compare-label">Energia</span><span>Não requer ATP (passiva)</span></div>
+        <div class="compare-item"><span class="compare-label">Membrana</span><span>Rompida precocemente</span></div>
+        <div class="compare-item"><span class="compare-label">Inflamação</span><span>Intensa — DAMPs vazam</span></div>
+        <div class="compare-item"><span class="compare-label">DNA</span><span>Fragmentação aleatória</span></div>
+        <div class="compare-item"><span class="compare-label">Morfologia</span><span>Inchaço, lise, debris</span></div>
+        <div class="compare-item"><span class="compare-label">Reversível?</span><span>Não — ponto de irreversibilidade precoce</span></div>
+      </div>
+    </div>
+
+    <div class="section-h2">10.1 Vias da Apoptose — Cronologia Molecular</div>
+
+    <div class="card-grid">
+      <div class="card clickable" onclick="openModal('apint')">
+        <span class="card-tag tag-green">VIA INTRÍNSECA</span>
+        <div class="card-title">Mitocondrial</div>
+        <p>Dano ao DNA, hipóxia severa, ROS → p53 → BH3-only (PUMA, NOXA, BIM) → BAX/BAK → MOMP → citocromo c → apoptossoma → caspase-9 → caspase-3.</p>
+        <div class="card-hint">↗ Ver detalhes</div>
+      </div>
+      <div class="card clickable" onclick="openModal('apext')">
+        <span class="card-tag tag-red">VIA EXTRÍNSECA</span>
+        <div class="card-title">Receptores de Morte</div>
+        <p>FasL → Fas (CD95) → FADD → DISC → caspase-8 → caspase-3. TNF-α → TNFR1 → TRADD → FADD. Conexão via Bid (tBid) amplifica via intrínseca.</p>
+        <div class="card-hint">↗ Ver detalhes</div>
+      </div>
+      <div class="card clickable" onclick="openModal('apcasp')">
+        <span class="card-tag tag-purple">EXECUÇÃO</span>
+        <div class="card-title">Caspases Executoras</div>
+        <p>Caspase-3 → CAD (DNase, ladder 200 bp) → PARP clivada → citoesqueleto desfeito → fosfatidilserina exposta → fagocitose silenciosa por TIM4/Annexin V.</p>
+        <div class="card-hint">↗ Ver detalhes</div>
+      </div>
+    </div>
+
+    <div class="section-h3">10.2 Morfologia Histológica da Apoptose</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag tag-red">H&E</span>
+        <div class="card-title">Microscopia Óptica</div>
+        <p>Célula retraída e menor. Citoplasma mais eosinofílico e denso. Cromatina condensada na periferia nuclear. <strong>Corpos apoptóticos</strong>: fragmentos envolvidos por membrana intacta — esferas eosinofílicas. Sem inflamação ao redor.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-gold">CONTEXTOS</span>
+        <div class="card-title">Padrões Específicos</div>
+        <p><strong>Corpos de Councilman:</strong> hepatócitos apoptóticos em hepatites virais (febre amarela, HBV, HCV). <strong>Starry sky:</strong> macrófagos com corpos apoptóticos em Burkitt e linfomas de alto grau. <strong>Timo:</strong> seleção negativa via Fas/FasL.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-cyan">IHC / DETECÇÃO</span>
+        <div class="card-title">Métodos Histológicos</div>
+        <p><strong>TUNEL:</strong> marca extremidades 3'-OH do DNA fragmentado. <strong>Caspase-3 clivada:</strong> IHC específico para forma ativa. <strong>Annexin V:</strong> marca PS exposta — citometria de fluxo em células vivas.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-blue">TERAPIA</span>
+        <div class="card-title">Alvo Terapêutico BCL-2</div>
+        <p><strong>Venetoclax (Venclexta®):</strong> inibidor de BCL-2 (mimético de BH3) → desloca BAX/BAK → apoptose em LLC. <strong>Bortezomibe:</strong> inibe proteassoma → acúmulo de proteínas ubiquitinadas → apoptose em mieloma.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MORTE CELULAR ESPECIALIZADA
+       ═══════════════════════════════════════════════════════ -->
+  <section id="morte-especializada">
+    <div class="part-header">
+      <span class="part-label">Parte V · §11</span>
+      <h2 class="part-title">Formas <em>Especializadas</em> de Morte Celular Programada</h2>
+    </div>
+
+    <p>Além da apoptose clássica, a biologia celular moderna reconhece formas distintas de morte programada — cada uma com maquinaria molecular própria, assinatura inflamatória específica e relevância clínica precisa.</p>
+
+    <div class="death-row">
+      <div class="death-card dc-red clickable" onclick="openModal('pirop')">
+        <div class="death-tag tag-red">INFLAMATÓRIA</div>
+        <div class="death-title">Piroptose</div>
+        <div class="death-subtitle">pyr (fogo) + ptōsis (queda)</div>
+        <div class="death-body">Inflamassoma → Caspase-1 → GSDMD → poros 15 nm → IL-1β + IL-18 + ruptura. Gota, sepse, aterosclerose. Colchicina inibe NLRP3.</div>
+      </div>
+      <div class="death-card dc-purple clickable" onclick="openModal('necrop')">
+        <div class="death-tag tag-purple">NECRÓTICA PROGRAMADA</div>
+        <div class="death-title">Necroptose</div>
+        <div class="death-subtitle">necrose + ptōsis</div>
+        <div class="death-body">RIPK1 → RIPK3 → MLKL → poros → DAMPs. Plano B quando vírus bloqueiam caspase-8. DII, IR renal. IHC: pMLKL.</div>
+      </div>
+      <div class="death-card dc-orange clickable" onclick="openModal('ferrop')">
+        <div class="death-tag tag-orange">LIPÍDIO-FERRO</div>
+        <div class="death-title">Ferroptose</div>
+        <div class="death-subtitle">ferrum + ptōsis (Dixon 2012)</div>
+        <div class="death-body">Fe²⁺ + Fenton → •OH → PUFAs → peroxidação lipídica em cadeia → GPX4/GSH é o freio. IRA, neurodegeneração, câncer RAS. IHC: 4-HNE.</div>
+      </div>
+    </div>
+
+    <!-- Inflamassoma expandido -->
+    <div class="section-h3">O Inflamassoma — Detalhe Molecular</div>
+
+    <div class="pathway">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--ink3); margin-bottom:1rem; text-transform:uppercase; letter-spacing:0.1em;">Via Canônica — NLRP3</p>
+      <div class="pathway-step"><span class="pathway-arrow">●</span><span class="pathway-node">PAMP / DAMP</span></div>
+      <div class="pathway-note">Cristais (urato, CaP, colesterol), ATP extracelular, toxinas bacterianas, alumínio</div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">NLRP3 ativa</span></div>
+      <div class="pathway-note">Outras NLRs: NLRC4 (flagelina), AIM2 (dsDNA citosólico), Caspase-11 (LPS — via não-canônica)</div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">Oligomerização + ASC</span></div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">Inflamassoma</span></div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">Caspase-1 ativa</span></div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><div>
+        <span class="pathway-node">GSDMD-NT → poros 15 nm</span> &nbsp;+&nbsp; <span class="pathway-node">Pro-IL-1β → IL-1β</span> &nbsp;+&nbsp; <span class="pathway-node">Pro-IL-18 → IL-18</span>
+      </div></div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">Ruptura membranar + DAMPs</span></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag tag-red">GOTA</span>
+        <div class="card-title">Cristais de Urato → NLRP3</div>
+        <p>Macrófagos sinoviais → IL-1β → artrite aguda inflamatória intensa. Tto: <strong>colchicina</strong> (inibe tubulina → bloqueia migração de neutrófilos e inflamassoma), <strong>anakinra</strong> (anti-receptor IL-1), <strong>canakinumab</strong> (anti-IL-1β).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-gold">ATEROSCLEROSE</span>
+        <div class="card-title">Cristais de Colesterol → NLRP3</div>
+        <p>Macrófagos na placa → IL-1β → inflamação → instabilidade → SCA. Trial CANTOS (NEJM 2017): canakinumab reduziu eventos cardiovasculares.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-purple">CAPS</span>
+        <div class="card-title">Ganho de Função NLRP3</div>
+        <p>Cryopyrin-associated Periodic Syndromes: mutações ativadoras do NLRP3 → ativação espontânea do inflamassoma → febre, urticária, artrite. Tratamento: antagonistas de IL-1.</p>
+      </div>
+    </div>
+
+    <!-- Ferroptose pathway -->
+    <div class="section-h3">Ferroptose — Peroxidação Lipídica em Cascata</div>
+
+    <div class="pathway">
+      <div class="pathway-step"><span class="pathway-arrow">●</span><span class="pathway-node">Fe²⁺ livre + H₂O₂</span></div>
+      <div class="pathway-note">Reação de Fenton: Fe²⁺ + H₂O₂ → Fe³⁺ + •OH + OH⁻</div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">•OH ataca PUFAs (AA 20:4, DHA 22:6)</span></div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">L• → LOO• → LOOH (propagação em cadeia)</span></div>
+      <div class="pathway-note">Destruição progressiva e maciça das membranas</div>
+      <div class="pathway-step"><span class="pathway-arrow">↓</span><span class="pathway-node">GPX4 (freio) → reduz LOOH → LOH (inerte)</span></div>
+      <div class="pathway-note">GPX4 usa GSH (Glutationa) como cofator. É selenoproteína (Se). Sistema MVA produz CoQ10 — inibidor alternativo (via FSP1)</div>
+      <div class="pathway-step"><span class="pathway-arrow">⚠️</span><span class="pathway-node">Se GPX4 inativado → LOOH acumula → Ferroptose</span></div>
+      <div class="pathway-note">xCT/SLC7A11 importa cistina → cisteína → GSH. NRF2 ativa defesa antioxidante mestre.</div>
+    </div>
+
+    <div class="callout callout-orange">
+      <div class="callout-title">💊 Relevância Clínica da Ferroptose</div>
+      <p><strong>IRA por hemólise/mioglobinúria:</strong> mioglobina → hem → Fe²⁺ → Fenton → ferroptose tubular → necrose tubular aguda. NAC (N-acetilcisteína → cisteína → GSH) tem efeito nefroprotetor.</p>
+      <p><strong>Neurodegeneração:</strong> acúmulo de Fe + ROS → peroxidação → perda neuronal em Alzheimer, Parkinson, ALS.</p>
+      <p><strong>Câncer RAS-mutado:</strong> ↑Fe + ↑ROS → muito dependente de GPX4 → vulnerável. Erastin, RSL3, sorafenibe têm componente ferroptótico.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DEGENERAÇÕES
+       ═══════════════════════════════════════════════════════ -->
+  <section id="degenera">
+    <div class="part-header">
+      <span class="part-label">Parte VI · §15</span>
+      <h2 class="part-title"><em>Degenerações</em> — Classificação e Histologia</h2>
+    </div>
+
+    <p>Degenerações são alterações morfológicas subcelulares que refletem acúmulos intracelulares ou alterações estruturais — muitas vezes reversíveis — resultantes de agressão metabólica, tóxica ou isquêmica.</p>
+
+    <div class="card-grid">
+      <div class="card clickable" onclick="openModal('dhid')">
+        <span class="card-tag tag-blue">ÁGUA</span>
+        <div class="card-title">Degeneração Hidrópica</div>
+        <p>Acúmulo de água por falha da Na⁺/K⁺-ATPase. H&E: citoplasma pálido, vacuolizado. Já detalhada na lesão reversível.</p>
+        <div class="card-hint">↗ Detalhes</div>
+      </div>
+      <div class="card clickable" onclick="openModal('dest')">
+        <span class="card-tag tag-gold">LIPÍDIO</span>
+        <div class="card-title">Degeneração Gordurosa / Esteatose</div>
+        <p>Acúmulo de TG em hepatócitos, cardiomiócitos, túbulos renais. Macrovacuolar vs. microvacuolar. Oil Red O em criostato.</p>
+        <div class="card-hint">↗ Detalhes</div>
+      </div>
+      <div class="card clickable" onclick="openModal('dhial')">
+        <span class="card-tag tag-red">PROTEÍNA</span>
+        <div class="card-title">Degeneração Hialina</div>
+        <p>Material eosinofílico homogêneo, vítreo ("hialino" = vidro em grego). Intracelular ou extracelular/vascular. Múltiplas etiologias.</p>
+        <div class="card-hint">↗ Detalhes</div>
+      </div>
+      <div class="card clickable" onclick="openModal('damil')">
+        <span class="card-tag tag-purple">AMILOIDE</span>
+        <div class="card-title">Amiloidose</div>
+        <p>Depósito extracelular de proteínas em folha-β (beta-pleated sheet). Congo Red + birrefringência verde maçã em luz polarizada. AA, AL, AB (Alzheimer).</p>
+        <div class="card-hint">↗ Detalhes</div>
+      </div>
+      <div class="card clickable" onclick="openModal('dmux')">
+        <span class="card-tag tag-cyan">MUCOPOLISSACARÍDEO</span>
+        <div class="card-title">Degeneração Mucoide / Mixomatosa</div>
+        <p>Acúmulo de glicosaminoglicanos (GAGs) na matriz extracelular. Prolapso valvar mitral, tumores mesenquimais. Alcian Blue+, PAS variável.</p>
+        <div class="card-hint">↗ Detalhes</div>
+      </div>
+    </div>
+
+    <!-- Esteatose expandida -->
+    <div class="section-h3">15.2 Esteatose Hepática — Detalhe</div>
+    <p>Equilíbrio do hepatócito: <strong>entrada</strong> (AGL circulantes + síntese de novo) — <strong>processamento</strong> (β-oxidação + esterificação) — <strong>saída</strong> (exportação como VLDL). Esteatose ocorre quando entrada &gt; saída + β-oxidação, ou quando exportação de VLDL é comprometida.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Causa</th><th>Mecanismo Central</th><th>Padrão</th><th>Zona</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Álcool</strong></td>
+          <td>↑NADH inibe β-oxidação; acetaldeído danifica mito.; ↑SREBP-1c → DNL</td>
+          <td>Macrovacuolar</td>
+          <td>Zona 3 (centrolobular)</td>
+        </tr>
+        <tr>
+          <td><strong>Obesidade/NASH</strong></td>
+          <td>Resistência insulínica → ↑AGL; insulina não suprime DNL</td>
+          <td>Macrovacuolar</td>
+          <td>Panlobular</td>
+        </tr>
+        <tr>
+          <td><strong>Gravidez aguda (AFLP)</strong></td>
+          <td>Mutação LCHAD fetal → metabólitos → inibem β-oxidação materna</td>
+          <td>Microvacuolar</td>
+          <td>Difusa</td>
+        </tr>
+        <tr>
+          <td><strong>Valproato / Tetraciclina</strong></td>
+          <td>Inibição direta da β-oxidação mitocondrial</td>
+          <td>Microvacuolar</td>
+          <td>Difusa</td>
+        </tr>
+        <tr>
+          <td><strong>Desnutrição (kwashiorkor)</strong></td>
+          <td>Falta de apo B-100 → VLDL não montada → TG retidos</td>
+          <td>Macrovacuolar</td>
+          <td>Zona 1 (periportal)</td>
+        </tr>
+        <tr>
+          <td><strong>Hep. C genótipo 3</strong></td>
+          <td>Vírus usa lipid droplets para replicação → interfere no metabolismo lipídico</td>
+          <td>Macrovacuolar</td>
+          <td>Variável</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Hialina -->
+    <div class="section-h3">15.3 Degeneração Hialina — Tipos</div>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag tag-red">INTRACELULAR</span>
+        <div class="card-title">Hialina Intracelular</div>
+        <p><strong>Corpúsculos de Mallory-Denk:</strong> CK8/18 + p62 + ubiquitina — hepatite alcoólica, NASH, Wilson. <strong>Corpúsculos de Russell:</strong> imunoglobulinas no RE de plasmócitos (PAS+). <strong>Inclusões de AAT:</strong> glóbulos PAS+/diastase-R em hepatócitos periportais.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-blue">EXTRACELULAR / VASCULAR</span>
+        <div class="card-title">Hialina Vascular</div>
+        <p><strong>Hialina arteriolar</strong> (arteriolosclerose hialina): espessamento amorfo eosinofílico da parede de arteríolas — HAS, DM. Extravasamento de proteínas plasmáticas + deposição de MBL. Distinção de necrose fibrinoide: sem inflamação, sem leucocitoclase.</p>
+      </div>
+    </div>
+
+    <!-- Amiloidose -->
+    <div class="section-h3">15.4 Amiloidose — Características e Diagnóstico</div>
+    <div class="callout callout-purple">
+      <div class="callout-title">🔮 O Que Define o Amiloide</div>
+      <p>Todas as proteínas amiloides compartilham: (1) conformação β-pleated sheet — fibrilas rígidas, insolúveis; (2) diâmetro de 7–10 nm na MET; (3) coloração com Congo Red → birrefringência verde maçã em luz polarizada (patognomônico); (4) depósito extracelular (principalmente).</p>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Tipo</th><th>Proteína Precursora</th><th>Contexto</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>AL</strong></td><td>Cadeias leves de imunoglobulina (κ ou λ)</td><td>Mieloma múltiplo, gamapatia monoclonal</td></tr>
+        <tr><td><strong>AA</strong></td><td>SAA (Serum Amyloid A — proteína de fase aguda)</td><td>Inflamação crônica: AR, osteomielite, IBD, febre familiar mediterrânea</td></tr>
+        <tr><td><strong>Aβ</strong></td><td>Proteína precursora do amiloide (APP) → Aβ 1-40/1-42</td><td>Alzheimer — plaques senis</td></tr>
+        <tr><td><strong>ATTR</strong></td><td>Transtirretina (TTR) — normal ou mutada</td><td>Amiloidose familiar (mut.) ou senil cardíaca (normal)</td></tr>
+        <tr><td><strong>Aβ₂M</strong></td><td>Beta-2-microglobulina</td><td>Diálise crônica (hemodiálise por anos)</td></tr>
+        <tr><td><strong>Prion</strong></td><td>PrP (proteína príon mal-dobrada)</td><td>CJD, Kuru, GSS, FFI</td></tr>
+      </tbody>
+    </table>
+
+    <div class="stain-panel">
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#e03c31"></div>
+        <div>
+          <div class="stain-name">Congo Red</div>
+          <div class="stain-result">Rosa-vermelho + birrefringência verde maçã (polarização) — padrão ouro</div>
+        </div>
+      </div>
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#5b4c9e"></div>
+        <div>
+          <div class="stain-name">Crystal Violet / Violeta de Genciana</div>
+          <div class="stain-result">Metacromasia rosada-violeta (amiloide rosa em fundo azul)</div>
+        </div>
+      </div>
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#7ec850"></div>
+        <div>
+          <div class="stain-name">Tioflavina T/S</div>
+          <div class="stain-result">Fluorescência verde brilhante — detecção em SNC (Alzheimer), mais sensível</div>
+        </div>
+      </div>
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#e8c14e"></div>
+        <div>
+          <div class="stain-name">IHC específica</div>
+          <div class="stain-result">Anti-kappa/lambda (AL), anti-SAA (AA), anti-TTR (ATTR), anti-Aβ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CALCIFICAÇÕES
+       ═══════════════════════════════════════════════════════ -->
+  <section id="calcificacoes">
+    <div class="part-header">
+      <span class="part-label">Parte VIII · §17–18</span>
+      <h2 class="part-title">Calcificações <em>Patológicas</em> — O Mineral no Lugar Errado</h2>
+    </div>
+
+    <div class="card-grid">
+      <div class="card clickable" onclick="openModal('calcdis')">
+        <span class="card-tag tag-red">CALCEMIA NORMAL</span>
+        <div class="card-title">Calcificação Distrófica</div>
+        <p>Depósito de Ca²⁺ em tecido morto ou necrótico. Metabolismo sistêmico normal. Aterosclerose, válvulas reumáticas, granulomas tuberculosos, necroses gordurosas.</p>
+        <div class="card-hint">↗ Detalhes + Von Kossa</div>
+      </div>
+      <div class="card clickable" onclick="openModal('calcmet')">
+        <span class="card-tag tag-gold">HIPERCALCEMIA</span>
+        <div class="card-title">Calcificação Metastática</div>
+        <p>Depósito em tecido normal por hipercalcemia sistêmica. Ca × P &gt; 55–70 → precipitação. Pulmão, mucosa gástrica, rins, artérias, córnea.</p>
+        <div class="card-hint">↗ Causas + Locais prediletos</div>
+      </div>
+    </div>
+
+    <div class="section-h3">Corpúsculos de Psamoma — Calcificação em Redemoinhos</div>
+    <div class="callout callout-cyan">
+      <div class="callout-title">🌀 Corpúsculos de Psamoma</div>
+      <p>Calcificações laminares concêntricas ("em casca de cebola") formadas por deposição de cálcio em células apoptóticas ou necróticas em redemoinhos de células tumorais. Nome: do grego <em>psammos</em> = areia.</p>
+      <p><strong>Tumores associados:</strong> Carcinoma papilífero da tireoide (quase patognomônico), meningioma psamomatoso, carcinoma seroso papilífero do ovário, mesotelioma.</p>
+      <p><strong>Histologia:</strong> Estruturas concêntricas basofílicas laminadas — Von Kossa preto, Alizarin Red laranja-vermelho.</p>
+    </div>
+
+    <div class="stain-panel">
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#1a1a1a"></div>
+        <div>
+          <div class="stain-name">Von Kossa (prata)</div>
+          <div class="stain-result">Cálcio → preto (reage com íons fosfato/carbonato)</div>
+        </div>
+      </div>
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#e8702a"></div>
+        <div>
+          <div class="stain-name">Alizarin Red S</div>
+          <div class="stain-result">Cálcio → laranja-vermelho vivo (quelação)</div>
+        </div>
+      </div>
+      <div class="stain-chip">
+        <div class="stain-dot" style="background:#5b5b8a"></div>
+        <div>
+          <div class="stain-name">H&E (triagem)</div>
+          <div class="stain-result">Material amorfo basofílico/azulado granular ou lamelar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       COLORAÇÕES ESPECIAIS — PAINEL
+       ═══════════════════════════════════════════════════════ -->
+  <section id="coloracoes">
+    <div class="part-header">
+      <span class="part-label">Referência · §19</span>
+      <h2 class="part-title">Tabela Mestra de <em>Colorações Especiais</em></h2>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Coloração</th><th>Substância alvo</th><th>Resultado</th><th>Contexto chave</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>H&E</strong></td><td>Triagem geral</td><td>Núcleo: azul. Citoplasma/colágeno: rosa</td><td>Universal</td></tr>
+        <tr><td><strong>Oil Red O</strong></td><td>Lipídios neutros (TG)</td><td>Vermelho-alaranjado vivo</td><td>⚠️ Necessita criostato</td></tr>
+        <tr><td><strong>PAS</strong></td><td>Glicogênio, mucinas neutras, fungos, AAT</td><td>Magenta vivo</td><td>+Diastase = distingue glicogênio</td></tr>
+        <tr><td><strong>PAS + Diastase</strong></td><td>PAS+ mas diastase-resistente = não glicogênio</td><td>Magenta (resistente)</td><td>AAT, fungos, muco</td></tr>
+        <tr><td><strong>Perls (Azul da Prússia)</strong></td><td>Ferro (hemossiderina)</td><td>Azul-turquesa</td><td>Hemossiderose, hemocromatose</td></tr>
+        <tr><td><strong>Fontana-Masson</strong></td><td>Melanina</td><td>Preto</td><td>Melanocitoma, melanoma</td></tr>
+        <tr><td><strong>Masson Tricrômico</strong></td><td>Colágeno / fibrose</td><td>Colágeno: azul/verde. Músculo: vermelho</td><td>Cirrose, cicatriz IAM, fibrose</td></tr>
+        <tr><td><strong>Alcian Blue</strong></td><td>Mucinas ácidas (GAGs), muco</td><td>Azul vivo</td><td>pH 2,5: sulfato + carboxil; pH 1,0: só sulfato</td></tr>
+        <tr><td><strong>Congo Red</strong></td><td>Amiloide (β-sheet)</td><td>Rosa-vermelho + <em>birrefringência verde maçã</em> polarização</td><td>Padrão ouro para amiloide</td></tr>
+        <tr><td><strong>Tioflavina T/S</strong></td><td>Amiloide (fluorescência)</td><td>Verde brilhante fluorescente</td><td>SNC, maior sensibilidade</td></tr>
+        <tr><td><strong>Von Kossa</strong></td><td>Sais de cálcio</td><td>Preto</td><td>Calcificações distrófica e metastática</td></tr>
+        <tr><td><strong>Alizarin Red S</strong></td><td>Cálcio</td><td>Laranja-vermelho</td><td>Calcificações, quelação do Ca²⁺</td></tr>
+        <tr><td><strong>Ziehl-Neelsen</strong></td><td>BAAR (micobactérias)</td><td>Vermelho-magenta sobre azul (fucsina)</td><td>Tuberculose, M. leprae</td></tr>
+        <tr><td><strong>Auramine-Rodamina</strong></td><td>BAAR (fluorescência)</td><td>Amarelo fluorescente</td><td>Mais sensível que ZN</td></tr>
+        <tr><td><strong>GMS / Grocott</strong></td><td>Fungos, Pneumocystis</td><td>Preto sobre fundo verde</td><td>Coccidioides, Histoplasma, PJP</td></tr>
+        <tr><td><strong>Gram</strong></td><td>Bactérias</td><td>Gram+: roxo. Gram-: rosa</td><td>Abscessos, meningite</td></tr>
+        <tr><td><strong>PTAH</strong></td><td>Fibrina</td><td>Azul/roxo</td><td>Necrose fibrinoide, CIVD</td></tr>
+        <tr><td><strong>Bielschowsky (prata)</strong></td><td>Neurofilamentos, tau, Aβ</td><td>Preto</td><td>NFTs Alzheimer, neuritos</td></tr>
+        <tr><td><strong>TUNEL</strong></td><td>DNA fragmentado (apoptose)</td><td>Fluorescente ou marrom (IHC)</td><td>Detecção de apoptose in situ</td></tr>
+        <tr><td><strong>TTC</strong></td><td>Atividade desidrogenases mitocondriais</td><td>Vermelho (viável), Branco (necrótico)</td><td>Autópsia: delimitar infarto macroscópico</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════
+     MODAIS
+     ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('active')">✕</button>
+    <div class="modal-tag" id="modal-tag"></div>
+    <div class="modal-h" id="modal-h"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const modalData = {
+  ncoa: {
+    tag: 'NECROSE · COAGULAÇÃO',
+    h: 'Necrose de Coagulação — "O Esqueleto que Permanece"',
+    body: `<p><strong>Mecanismo paradoxal:</strong> Na isquemia, a queda rápida do pH intracelular (ácido lático) desnatura proteínas celulares — inclusive as proteases lisossomais. A acidose que mata a célula também preserva sua arquitetura ao inativar as enzimas de digestão. Resultado: ghost cells.</p>
+<p><strong>Localização típica:</strong> Coração, rim, adrenal, baço — qualquer parênquima sólido isquêmico. Padrão mais comum de necrose.</p>
+<p><strong>Macroscopia:</strong> Área pálida, amarelo-acinzentada, bem demarcada por borda hiperêmica. Rim: infarto em cunha (base cortical, ápice no hilo). 1–2 semanas: cicatriz fibrosa esbranquiçada.</p>
+<p><strong>Histologia H&E 0–4h:</strong> Area indistinguível — armadilha diagnóstica! TTC: área branca (sem atividade enzimática).</p>
+<p><strong>Histologia 4–12h:</strong> Hipereosinofilia citoplasmática. Bandas de contração (reperfusão/morte súbita): bandas densas transversais nos cardiomiócitos por hipercontração sarcomérica com Ca²⁺ maciço sem ATP para relaxamento.</p>
+<p><strong>24–72h:</strong> Ghost cells — contornos celulares preservados sem núcleo, sem detalhes citoplasmáticos. Denso infiltrado neutrofílico.</p>
+<p><strong>Laudo modelo 48h:</strong> "Cardiomiócitos hipereosinofílicos, perda dos detalhes citoplasmáticos e nucleares (cariólise e cariorrexe generalizadas), mantendo-se os contornos celulares (ghost cells). Denso infiltrado neutrofílico. Achados compatíveis com necrose isquêmica de coagulação, estimativa temporal 24–72 horas."</p>`
+  },
+  nliq: {
+    tag: 'NECROSE · LIQUEFATIVA',
+    h: 'Necrose Liquefativa — "A Dissolução Total"',
+    body: `<p><strong>Mecanismo:</strong> Enzimas proteolíticas de neutrófilos/macrófagos + células lisadas predominam sobre coagulação → tecido completamente digerido → material semissólido.</p>
+<p><strong>Dois cenários:</strong><br>
+• <em>Infecções bacterianas/fúngicas:</em> Bactérias → neutrófilos → elastase, catepsina G, MPO, defensinas, DNase → pus (neutrófilos mortos + detritos + bactérias + proteínas plasmáticas).<br>
+• <em>Infarto cerebral:</em> Alto teor de lipídios (mielina) + baixo conteúdo de proteínas estruturais firmes → amolecimento progressivo → cavidade cística (encephalomalacia).</p>
+<p><strong>Células de Gitter (gitter cells):</strong> Microglia/macrófagos com citoplasma finamente vacuolizado por mielina fagocitada. "Gitter" = grade em alemão (aspecto de rede lipídica).</p>
+<p><strong>Gliose reativa:</strong> Astrócitos com citoplasma eosinofílico abundante — "cicatriz" do SNC. GFAP+ em IHC.</p>
+<p><strong>Colorações para organismos:</strong> GMS (fungos → preto), ZN (BAAR → vermelho-magenta), Gram (bactérias → roxo/rosa), PAS (fungos → magenta), Warthin-Starry (Treponema → espiroq. pretas).</p>
+<p><strong>Laudo — Infarto Cerebral Subagudo:</strong> "Parênquima cerebral com necrose liquefativa, abundância de macrófagos espumosos (células de Gitter) e proliferação astrocitária reativa periférica (gliose). Neurônios hipercromáticos e retraídos. GFAP positivo nos astrócitos reativos. Compatível com infarto cerebral, fase subaguda (7–14 dias)."</p>`
+  },
+  ncas: {
+    tag: 'NECROSE · CASEOSA',
+    h: 'Necrose Caseosa — "O Queijo Branco da Tuberculose"',
+    body: `<p><strong>Etimologia:</strong> Do latim <em>caseus</em> = queijo. Virchow e Laennec (século XIX) observaram textura semelhante ao fromage blanc.</p>
+<p><strong>Mecanismo — triplo:</strong> coagulação + liquefação + hipersensibilidade tipo IV (Th1). Quase exclusivo de micobactérias e alguns fungos (Histoplasma, Coccidioides).</p>
+<p><strong>Cord factor</strong> (6,6'-dimicolato de trealose): ativa NLRP3 → IL-1β, tóxico para mitocôndrias. <strong>LAM</strong>: inibe fusão fagossoma-lisossoma (↓PI3K → ↓RAB7) → bacilo sobrevive no macrófago. → Th1: IFN-γ → macrófagos M1 → TNF-α + ROI → macrófago infectado morre → detritos = centro caseoso.</p>
+<p><strong>Histologia centro caseoso:</strong> Material granular amorfo eosinofílico-rosado sem arquitetura reconhecível. Sem células viáveis no centro — distingue da sarcoidose (granuloma "nudo", sem necrose).</p>
+<p><strong>Células epitelioides:</strong> Macrófagos ativados por IFN-γ, citoplasma abundante eosinofílico granular, bordas celulares pouco definidas. Perderam capacidade fagocítica, aumentaram secreção enzimática.</p>
+<p><strong>Células gigantes de Langhans:</strong> Fusão de macrófagos ativados → núcleos em ferradura/semicírculo na periferia. Distintas de corpo estranho (núcleos centrais agrupados).</p>
+<p><strong>Diagnóstico diferencial granulomas:</strong></p>
+<p>TB: caseosa + Langhans + ZN± | Sarcoidose: sem necrose + Schaumann + corpos asteroides | Corpo estranho: material birrefringente + núcleos centrais | Fungos: PAS/GMS+</p>
+<p><strong>Laudo:</strong> "Granulomas epitelioides com necrose caseosa central (material amorfo granular eosinofílico), células gigantes multinucleadas tipo Langhans, linfócitos periféricos. ZN: baciloscopia negativa neste corte (não exclui TB — correlacionar com culturas e PCR)."</p>`
+  },
+  ngor: {
+    tag: 'NECROSE · GORDUROSA',
+    h: 'Necrose Gordurosa — "A Saponificação"',
+    body: `<p><strong>a) Enzimática (Pancreatite aguda):</strong><br>
+Pancreatite → ativação intraacinar: tripsinogênio → tripsina → ativa lipase pancreática, fosfolipase A₂, elastase → lipase cliva TG do tecido adiposo peripancreático → glicerol + AGL → AGL + Ca²⁺ → <em>saponificação</em> (sabões de cálcio insolúveis).</p>
+<p><strong>Consequência clínica:</strong> Ca²⁺ sérico "sequestrado" pela saponificação → hipocalcemia → risco de tetania e arritmias.</p>
+<p><strong>Macroscopia:</strong> Esteatonecrose — áreas brancas, calcárias, "em giz/cera de vela", irregulares no tecido adiposo peripancreático e mesentério.</p>
+<p><strong>Histologia H&E:</strong> Adipócitos necróticos ("fantasmas" — membranas sem núcleo) + material granular basofílico de saponificação. Von Kossa: preto.</p>
+<p><strong>b) Traumática (Mama):</strong><br>
+Trauma → ruptura de adipócitos → lipídios livres → reação de corpo estranho → macrófagos espumosos + células gigantes de corpo estranho + fibrose. Clinicamente mimetiza carcinoma (nódulo duro, irregular + calcificações na mamografia).</p>
+<p><strong>Histologia:</strong> Adipócitos necróticos + macrófagos espumosos (citoplasma vacuolizado, Oil Red O+ em criostato) + células gigantes (núcleos centrais agrupados) + fibrose.</p>`
+  },
+  nfib: {
+    tag: 'NECROSE · FIBRINOIDE',
+    h: 'Necrose Fibrinoide — "O Vaso que Morre de Dentro"',
+    body: `<p><strong>Definição:</strong> Material eosinofílico homogêneo, amorfo, na parede vascular — mistura de proteínas plasmáticas extravasadas + componentes da parede destruída + fibrina. Aspecto "semelhante à fibrina" — daí o nome. Nunca resultado de isquemia simples — sempre indica vasculite ou hipertensão maligna.</p>
+<p><strong>Mecanismo:</strong> Imunocomplexos/imunodepósitos na parede → complemento → inflamação vascular intensa → necrose da parede.</p>
+<p><strong>Contextos:</strong><br>
+• Vasculite leucocitoclástica (IgA, IgG + complemento): leucocitoclase = restos nucleares de neutrófilos ("poeira nuclear")<br>
+• Poliarterite nodosa (PAN): artérias médias<br>
+• Nódulos reumáticos (AR, febre reumática): fibrinoide central + paliçada de histiócitos<br>
+• Hipertensão maligna: arteríolas "em pele de cebola" (hiperplasia da íntima) ou necrose fibrinoide total<br>
+• LES: vasculite de pequenos vasos</p>
+<p><strong>Colorações:</strong> PTAH (fibrina → azul/roxo), Masson Tricrômico (fibrina → vermelho, colágeno → azul), MSB (fibrina → scarlet).</p>
+<p><strong>Imunofluorescência direta:</strong> IgA granular (Púrpura de Henoch-Schönlein), IgG + C3 (LES, PAN).</p>`
+  },
+  ngan: {
+    tag: 'NECROSE · GANGRENOSA',
+    h: 'Necrose Gangrenosa — Descrição Clínico-Macroscópica',
+    body: `<p><em>Não é um padrão histológico específico</em> — é uma descrição clínica/macroscópica de necrose isquêmica de um membro/segmento corporal.</p>
+<p><strong>Gangrena seca:</strong> Necrose de coagulação + mumificação (desidratação, ausência de anaeróbios). Membro preto, duro, "mumificado", demarcado. DM + aterosclerose periférica grave.</p>
+<p><strong>Gangrena úmida:</strong> Coagulação + infecção por anaeróbios (Clostridium perfringens, polimicrobiana) → liquefação parcial + bolhas de gás (crepitação — CO₂ e H₂S) + odor fétido + toxemia. Mais perigosa.</p>
+<p><strong>Gangrena gasosa / Mionecrosis clostridial:</strong> C. perfringens → alfa-toxina (lecitinase C, fosfolipase C) → degrada fosfolipídios de membrana + ativa complemento + vasoespasmo → necrose rápida + gás no músculo. <em>Emergência cirúrgica absoluta</em>: desbridamento amplo imediato + oxigenioterapia hiperbárica.</p>`
+  },
+  apint: {
+    tag: 'APOPTOSE · VIA INTRÍNSECA',
+    h: 'Via Intrínseca (Mitocondrial) da Apoptose',
+    body: `<p><strong>Sensores de dano:</strong> p53 (dano ao DNA via ATM/ATR → Chk1/Chk2 → p53) → ↑PUMA, NOXA, BAX. BH3-only: BIM (desacoplamento citoesqueleto), BAD (retirada de fatores de crescimento — Akt inativa → BAD desfosforilado).</p>
+<p><strong>Família BCL-2 — guardiões da mitocôndria:</strong><br>
+• Pró-sobrevivência: BCL-2, BCL-XL, MCL-1, BCL-W, A1 → mantêm BAX/BAK inativados<br>
+• Pró-apoptóticos efetores: BAX, BAK → oligomerizam → poros na MOM<br>
+• BH3-only ativadores: BIM, PUMA → deslocam BAX/BAK de BCL-2 → liberam efetores</p>
+<p><strong>MOMP (Mitochondrial Outer Membrane Permeabilization):</strong><br>
+BAX/BAK livres → oligomerizam → poros na membrana mitocondrial externa →<br>
+• Citocromo c liberado no citoplasma<br>
+• SMAC/DIABLO (inibe IAPs — Inhibitor of Apoptosis Proteins)<br>
+• AIF (Apoptosis Inducing Factor)</p>
+<p><strong>Apoptossoma:</strong> Citocromo c + APAF-1 + dATP → estrutura heptamérica "em roda de 7 raios" → recruta pro-caspase-9 → caspase-9 ativa (iniciadora) → caspase-3, 6, 7 (executoras).</p>
+<p><strong>Alvo venetoclax:</strong> BCL-2 inibido → BAX/BAK livres → apoptose em LLC (Roberts AW, NEJM 2016).</p>`
+  },
+  apext: {
+    tag: 'APOPTOSE · VIA EXTRÍNSECA',
+    h: 'Via Extrínseca (Receptores de Morte) da Apoptose',
+    body: `<p><strong>Receptores de morte e seus ligantes:</strong><br>
+• FasL (CTL, células NK) → Fas/CD95 → trimerização → FADD → DISC → pro-caspase-8 → caspase-8<br>
+• TNF-α → TNFR1 → TRADD → FADD → caspase-8<br>
+• TRAIL → DR4/DR5 → caspase-8</p>
+<p><strong>DISC (Death-Inducing Signaling Complex):</strong> Complexo multiproteico formado no receptor que recruta e ativa caspase-8 — caspase iniciadora da via extrínseca.</p>
+<p><strong>Conexão com via intrínseca — Bid:</strong> Caspase-8 cliva Bid → tBid (truncated Bid) → ativa BAX/BAK na mitocôndria → amplifica via intrínseca. Especialmente importante em hepatócitos (células tipo II), onde a via extrínseca sozinha é insuficiente.</p>
+<p><strong>Fisiologia:</strong><br>
+• Seleção negativa de linfócitos T no timo: células epiteliais expressam FasL → timócitos autorreativos → apoptose → tolerância central<br>
+• CTL (linfócitos T citotóxicos): FasL + granzima B (caspase-like) → eliminação de células infectadas</p>`
+  },
+  apcasp: {
+    tag: 'APOPTOSE · EXECUÇÃO',
+    h: 'Caspases Executoras — A Execução',
+    body: `<p><strong>Caspase-3 é a executora central. Ela:</strong></p>
+<p>→ Ativa <strong>CAD (Caspase-Activated DNase)</strong>: normalmente inibida por ICAD. CAD digere DNA em fragmentos de ~180 bp (internucleosomal) → "ladder" (escada) em eletroforese em gel de agarose — padrão diagnóstico de apoptose.</p>
+<p>→ Cliva <strong>PARP</strong> (Poly ADP-Ribose Polymerase): PARP normalmente repara DNA. Clivada → perde função → sem reparo → acelera a morte.</p>
+<p>→ Cliva <strong>proteínas do citoesqueleto</strong>: espectrina, gelsolina, fodrina → retração e fragmentação celular.</p>
+<p>→ Cliva <strong>lamininas nucleares</strong> → condensação e fragmentação nuclear.</p>
+<p>→ Inibe <strong>flippase</strong> + ativa <strong>scramblase</strong> → fosfatidilserina (PS) migra do folheto interno ao externo → PS exposta na superfície → reconhecida por TIM4 e Annexin V nos macrófagos → <em>fagocitose silenciosa</em>, sem liberação de DAMPs, sem inflamação.</p>
+<p><strong>Por que não há inflamação na apoptose:</strong> A membrana permanece intacta até os corpos apoptóticos serem fagocitados. Os DAMPs ficam contidos. Macrófagos reconhecem PS e "comem" silenciosamente (efferocitose eficiente).</p>`
+  },
+  pirop: {
+    tag: 'MORTE ESPECIALIZADA · PIROPTOSE',
+    h: 'Piroptose — "A Morte em Fogo"',
+    body: `<p><strong>Descoberta:</strong> Brad Cookson e Molly Brennan, 2001. Nome de <em>pyr</em> (fogo) + <em>ptōsis</em> (queda) — inflamação intensa que caracteriza.</p>
+<p><strong>Sensores NLR:</strong><br>
+• NLRP3: cristais (urato, pirofosfato de cálcio, colesterol), ATP extracelular, toxinas bacterianas, alumínio<br>
+• NLRC4: flagelina, sistemas de secreção tipo III/IV (Salmonella, Legionella, Pseudomonas)<br>
+• AIM2: dsDNA citosólico (vírus, DNA mitocondrial)<br>
+• Via não-canônica: Caspase-4/5/11 detecta LPS citoplasmático → GSDMD diretamente</p>
+<p><strong>GSDMD (Gasdermin D):</strong> Caspase-1 cliva GSDMD → N-terminal (GSDMD-NT) oligomeriza → poros ~15 nm na membrana. Influxo de água → efluxo de K⁺ → inchaço → ruptura. IL-1β e IL-18 liberadas pelos poros antes da ruptura.</p>
+<p><strong>Histologia:</strong> Difícil distinguir de necrose em H&E. IHC: GSDMD-NT (localização na membrana). ELISA plasmático: IL-18 elevada (>500 pg/mL em HLH/Síndrome de Ativação de Macrófagos).</p>
+<p><strong>CAPS:</strong> Mutações ganho de função NLRP3 → piroptose espontânea → febre, urticária, artrite → anakinra/canakinumab.</p>`
+  },
+  necrop: {
+    tag: 'MORTE ESPECIALIZADA · NECROPTOSE',
+    h: 'Necroptose — "A Morte Programada que Parece Necrose"',
+    body: `<p><strong>Mecanismo — ativado quando caspase-8 está inibida (p.ex. por vírus):</strong><br>
+TNF-α → TNFR1 → RIPK1 → (fosforila) RIPK3 → necrossoma → (fosforila) MLKL → MLKL oligomeriza → insere na membrana → poros → ruptura → DAMPs → inflamação idêntica à necrose.</p>
+<p><strong>Papel evolutivo — "Plano B":</strong> Quando vírus bloqueiam caspase-8 para escapar da apoptose, a célula ativa necroptose — que mata a célula E libera DAMPs → recruta imunidade inata → tenta controlar infecção mesmo sem apoptose. É uma morte "altruísta".</p>
+<p><strong>Relevância clínica:</strong><br>
+• DII (Crohn, CU): necroptose de enterócitos por TNF-α → ulceração. Inibidores de RIPK1 em desenvolvimento.<br>
+• IR renal: necroptose de células tubulares proximais → IRA. Necrostatina-1 (inibidor de RIPK1) — modelos experimentais.<br>
+• SARS-CoV-2: ativa necroptose em pneumócitos tipo II → SARS grave.</p>
+<p><strong>Diagnóstico histológico:</strong> Indistinguível de necrose em H&E. IHC específica: <em>pMLKL</em> (MLKL fosforilada) — localização na membrana plasmática = célula em necroptose ativa.</p>`
+  },
+  ferrop: {
+    tag: 'MORTE ESPECIALIZADA · FERROPTOSE',
+    h: 'Ferroptose — "A Morte pelo Ferro e pelo Óxido"',
+    body: `<p><strong>Descoberta:</strong> Dixon SJ et al., Cell 2012. Nome de <em>ferrum</em> (ferro) + <em>ptōsis</em>.</p>
+<p><strong>Mecanismo em cadeia:</strong><br>
+Fe²⁺ + H₂O₂ → •OH (Fenton) → ataca PUFAs das membranas → L• → LOO• → LOOH → propagação maciça → destruição das membranas.</p>
+<p><strong>GPX4 é o freio central:</strong> Glutationa Peroxidase 4 usa GSH para reduzir LOOH → LOH (inerte). É selenoproteína. Inativação → LOOH acumula → ferroptose.</p>
+<p><strong>Sistema de defesa adicional:</strong><br>
+• xCT/SLC7A11: importa cistina → cisteína → GSH. Inibido por erastin, sorafenibe.<br>
+• FSP1: reduz ubiquinona → ubiquinol (CoQ10) → inibe LOO• nas membranas (via independente de GPX4).<br>
+• NRF2: fator de transcrição antioxidante mestre → ativa SLC7A11, GPX4, GSS.</p>
+<p><strong>Marcadores IHC:</strong><br>
+• 4-HNE (4-Hidroxinonenal): aldeído da peroxidação de n-6. Células ferroptóticas → positivo.<br>
+• MDA (Malondialdeído): similar.<br>
+• SLC7A11 e GPX4: expressão reduzida em ferroptose.</p>
+<p><strong>NAC (N-acetilcisteína):</strong> precursora de cisteína → ↑GSH → ↑GPX4 → proteção parcial contra ferroptose tubular na IRA por hemólise.</p>`
+  },
+  dhid: {
+    tag: 'DEGENERAÇÃO · HIDRÓPICA',
+    h: 'Degeneração Hidrópica — Acúmulo de Água',
+    body: `<p><strong>Mecanismo:</strong> ↓ATP → ↓Na⁺/K⁺-ATPase → Na⁺ acumula intracelularmente → ↑osmolaridade intracelular → água entra por osmose (aquaporinas) → célula incha. Mais avançado que o inchaço simples: há dilatação do RE e Golgi.</p>
+<p><strong>H&E:</strong> Células aumentadas de tamanho. Citoplasma claro, pálido, "aguado". Membranas com limites preservados mas levemente redundantes. Núcleo central. Aspecto "vacuolizado" por organelas inchadas.</p>
+<p><strong>Diagnóstico diferencial dos vacúolos em H&E:</strong><br>
+• Água (hidrópica): PAS-, Oil Red O-<br>
+• Glicogênio: PAS+, diastase-sensível<br>
+• Lipídio (esteatose): Oil Red O+ em criostato<br>
+• Mucina: Alcian Blue+, PAS+<br>
+• Artefato: comum em tecido gordo não fixado adequadamente</p>
+<p><strong>Reversibilidade:</strong> Se o agressor for removido e o ATP for restaurado, a Na⁺/K⁺-ATPase reativa → Na⁺ e água saem → célula normaliza. Completamente reversível.</p>`
+  },
+  dest: {
+    tag: 'DEGENERAÇÃO · GORDUROSA',
+    h: 'Esteatose — Degeneração Gordurosa',
+    body: `<p><strong>Macroscopia hepática:</strong> Hepatomegalia (até 4–5 kg; normal ~1,5 kg), amarelado, consistência pastosa/untuosa, margem romba (ângulo > 45°).</p>
+<p><strong>Microscopia H&E:</strong> Vacúolos intracitoplasmáticos claros (lipídios extraídos pelo xilol/etanol do processamento).<br>
+• Macrovacuolar: vacúolo único grande, núcleo deslocado para a periferia — "anel de sinete". Alcoolismo, NASH.<br>
+• Microvacuolar: múltiplos vacúolos pequenos sem deslocamento nuclear — "espuma citoplasmática". Disfunção mitocondrial grave (Reye, gravidez, valproato, tetraciclina).</p>
+<p><strong>Oil Red O:</strong> ⚠️ Necessita de criostato (tecido fresco/congelado). Lipídios → vermelho-alaranjado vivo. Em parafina: vacúolos vazios.</p>
+<p><strong>Escore NAS (NAFLD Activity Score):</strong><br>
+Esteatose: 0 (&lt;5%), 1 (5–33%), 2 (34–66%), 3 (&gt;66%)<br>
++ Inflamação lobular + Balonização hepatocitária<br>
+NAS ≥ 5 = diagnóstico de NASH.</p>`
+  },
+  dhial: {
+    tag: 'DEGENERAÇÃO · HIALINA',
+    h: 'Degeneração Hialina — Tipos e Contextos',
+    body: `<p><strong>Hialino</strong> = do grego <em>hyalos</em> = vidro. Material eosinofílico homogêneo, vítreo/translúcido em H&E. Não é um único tipo de substância — é um padrão morfológico compartilhado por diferentes materiais.</p>
+<p><strong>a) Hialina Intracelular:</strong><br>
+• <em>Corpúsculos de Mallory-Denk</em>: CK8/18 + p62/sequestossoma + ubiquitina. Estresse oxidativo → UPR → falha do UPS → agregação. IHC: CK8/18+, p62+, ubiquitina+. Hepatite alcoólica (zona 3), NASH, Wilson, CBP, CHC.<br>
+• <em>Corpúsculos de Russell</em>: RE distendido por imunoglobulinas em excesso. PAS+ (glicosilação) diastase-R. Inflamação crônica, mieloma.<br>
+• <em>Inclusões de AAT</em>: AAT mutante Z presa no RE de hepatócitos periportais. PAS+/diastase-R. IHC: AAT+. Cirrose + enfisema panlobular.</p>
+<p><strong>b) Hialina Vascular (Arteriolosclerose hialina):</strong><br>
+Espessamento amorfo eosinofílico da parede de arteríolas. HAS, DM. Extravasamento de proteínas plasmáticas + deposição de MBL (membrana basal laminina). Sem inflamação, sem leucocitoclase (distingue de necrose fibrinoide).</p>`
+  },
+  damil: {
+    tag: 'DEGENERAÇÃO · AMILOIDE',
+    h: 'Amiloidose — A Proteína em Folha-Beta',
+    body: `<p><strong>Definição estrutural:</strong> Proteínas em conformação β-pleated sheet (não a proteína normal) → fibrilas rígidas, insolúveis, 7–10 nm de diâmetro (MET), resistentes à proteólise.</p>
+<p><strong>Três propriedades universais de todo amiloide:</strong><br>
+1. Ligação ao Congo Red → rosa-vermelho + birrefringência verde maçã em luz polarizada (patognomônico)<br>
+2. Fibrilas de 7–10 nm na MET<br>
+3. Estrutura β-sheet cruzada detectada por difração de raios X</p>
+<p><strong>Rim na amiloidose (AA/AL):</strong> Depósito no mesângio glomerular → expansão mesangial → compressão dos capilares → proteinúria nefrótica. Amiloide cresce pela parede das alças → "glomerulosclerose amiloide". PAS: fraco positivo. Congo Red: positivo. IHC: anti-SAA ou anti-kappa/lambda.</p>
+<p><strong>Laudo modelo — Amiloidose Renal:</strong> "Glomérulos com expansão do mesângio por material amorfo eosinofílico PAS fraco-positivo, com extensão para as alças capilares. Artérias e arteríolas com espessamento hialino. Congo Red positivo com birrefringência verde-maçã característica em luz polarizada. IHC anti-SAA positivo. Compatível com amiloidose renal AA (inflamatória)."</p>
+<p><strong>Coração em ATTR:</strong> Cardiomiopatia restritiva — espessamento de todas as paredes (não só parede posterior como em HAS). "Granular sparkling" no ecocardiograma. Tafamidis: estabiliza TTR tetramérica, aprovado para ATTR cardiomíaca.</p>`
+  },
+  dmux: {
+    tag: 'DEGENERAÇÃO · MUCOIDE',
+    h: 'Degeneração Mucoide / Mixomatosa',
+    body: `<p><strong>O que é:</strong> Acúmulo de glicosaminoglicanos (GAGs — condroitim sulfato, dermatam sulfato, ácido hialurônico) na matriz extracelular de tecidos mesenquimais. A matriz fica gelatinosa, basofílica, de aspecto "mixomatoso" (do grego <em>myxa</em> = muco).</p>
+<p><strong>Contextos:</strong><br>
+• <em>Prolapso valvar mitral (PVM):</em> Degeneração mixomatosa do colágeno e dos proteoglicanos da válvula mitral → folhetos redundantes, espessados, ballonantes → clique + sopro mesossistólico. Risco de ruptura de cordoalha → IM aguda.<br>
+• <em>Tumores mesenquimais:</em> Lipossarcoma mixoide (muito bem-diferenciado, t(12;16) → CHOP-FUS), condrossarcoma mixoide, siringoma condroide.<br>
+• <em>Envelhecimento articular:</em> Cistos sinoviais (gânglios), cisto poplíteo de Baker.</p>
+<p><strong>Colorações:</strong><br>
+• Alcian Blue (pH 2,5): GAGs sulfatados + carboxilados → azul vivo<br>
+• Alcian Blue (pH 1,0): só GAGs sulfatados<br>
+• PAS: variável (mucinas neutras+, ácidas-)<br>
+• Azul de toluidina: metacromasia (GAGs ficam róseo-violeta em fundo azul)</p>`
+  },
+  calcdis: {
+    tag: 'CALCIFICAÇÃO · DISTRÓFICA',
+    h: 'Calcificação Distrófica — No Tecido Morto',
+    body: `<p><strong>Definição:</strong> Depósito de sais de cálcio (principalmente hidroxiapatita — Ca₁₀(PO₄)₆(OH)₂) em tecidos previamente necrosados, degenerados ou cronicamente lesados. <em>Calcemia normal</em> — o metabolismo sistêmico do Ca²⁺ é normal.</p>
+<p><strong>Mecanismo:</strong> Células mortas liberam fosfolipídios de membrana → ligam Ca²⁺ → nucleação de cristais de hidroxiapatita. Proteínas extracelulares (osteopontina, osteocalcina — expressas por macrófagos e células musculares lisas das placas) servem como scaffold.</p>
+<p><strong>Exemplos clínicos:</strong><br>
+• <em>Aterosclerose avançada:</em> Calcificação do núcleo necrótico lipídico das placas → "calcificação da íntima". Detectável por TC de coronárias (escore de Agatston). Calcificação da média: artérias periféricas em DM/IRC — morcélier (incompressibilidade — ITB falsamente elevado).<br>
+• <em>Granulomas tuberculosos calcificados:</em> Nódulo de Ghon calcificado + linfonodo hilar = Complexo de Ranke — marca radiológica de TB primária antiga.<br>
+• <em>Válvulas cardíacas reumáticas:</em> Febre reumática → cicatriz valvar → calcificação distrófica → estenose aórtica reumática + fusão das comissuras.<br>
+• <em>Corpúsculos de Psamoma:</em> Papilar tireoide, meningioma, seroso ovário.</p>
+<p><strong>Histologia:</strong> H&E: material amorfo basofílico granular ou lamelar. Von Kossa: preto. Alizarin Red S: laranja-vermelho.</p>`
+  },
+  calcmet: {
+    tag: 'CALCIFICAÇÃO · METASTÁTICA',
+    h: 'Calcificação Metastática — Na Hipercalcemia',
+    body: `<p><strong>Definição:</strong> Depósito de sais de cálcio em <em>tecido normal</em> por hipercalcemia sistêmica. Sem lesão tecidual prévia — distingue radicalmente da distrófica.</p>
+<p><strong>Mecanismo:</strong> Produto Ca × P (mEq/L × mg/dL) > 55–70 → precipitação de CaHPO₄ → hidroxiapatita. Precipitação preferencial em tecidos com pH relativamente alcalino (pulmão, mucosa gástrica) — pH alcalino favorece precipitação do carbonato de cálcio e reduz solubilidade do CaHPO₄.</p>
+<p><strong>Causas de hipercalcemia:</strong><br>
+• Hiperparatireoidismo primário (adenoma de paratireoide — PTH elevado → reabsorção óssea + reabsorção tubular renal)<br>
+• Hipercalcemia da malignidade (PTHrP + lise óssea por metástases osteolíticas — mieloma, carcinoma de mama, pulmão)<br>
+• Hipervitaminose D (↑absorção intestinal de Ca²⁺ + ↑reabsorção óssea)<br>
+• Sarcoidose (macrófagos do granuloma expressam 1α-hidroxilase → ↑1,25-OH-D3)<br>
+• Imobilização prolongada (↑reabsorção óssea sem formação)</p>
+<p><strong>Locais prediletos de calcificação metastática:</strong><br>
+• Parênquima pulmonar (pH alcalino por perda de CO₂ durante a expiração)<br>
+• Mucosa gástrica (pH alto após secreção de HCl)<br>
+• Rins (nefrocalcinose → IRC)<br>
+• Artérias<br>
+• Córnea (band keratopathy — faixa branca no limbo corneano)</p>`
+  }
+};
+
+function openModal(key) {
+  event.stopPropagation();
+  const d = modalData[key];
+  if (!d) return;
+  document.getElementById('modal-tag').textContent = d.tag;
+  document.getElementById('modal-h').textContent = d.h;
+  document.getElementById('modal-body').innerHTML = d.body;
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.querySelectorAll('.toc-nav a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
